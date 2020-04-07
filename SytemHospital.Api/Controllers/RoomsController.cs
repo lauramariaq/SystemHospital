@@ -27,10 +27,11 @@ namespace SytemHospital.Api.Controllers
         {
             var rooms = _context.Rooms.ToList();
 
+            var list = rooms;
             if (rooms is null)
                 return NotFound();
 
-            return Ok(rooms);
+            return Ok(list);
 
         }
         [HttpPost("[action]")]
