@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SytemHospital.Bi.Dto
 {
-    public class RoomsDto
+    public class DoctorDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

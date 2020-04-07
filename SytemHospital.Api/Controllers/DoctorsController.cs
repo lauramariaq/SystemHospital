@@ -25,7 +25,7 @@ namespace SytemHospital.Api.Controllers
         [HttpGet("[action]")]
         public IActionResult GetAll()
         {
-            var doctors = _context.Doctors.ToList();
+            var doctors = _context.Doctors.Where(x => !x.IsDeleted).ToList();
 
             if (doctors is null)
                 return NotFound();
@@ -34,7 +34,7 @@ namespace SytemHospital.Api.Controllers
 
         }
         [HttpPost("[action]")]
-        public IActionResult SaveDoctor([FromBody] RoomsDto entityDto)
+        public IActionResult SaveDoctor([FromBody] DoctorDto entityDto)
         {
             if (!ModelState.IsValid)
             {
@@ -63,7 +63,7 @@ namespace SytemHospital.Api.Controllers
 
         }
         [HttpPut("[action]")]
-        public IActionResult EditDoctor([FromBody] RoomsDto entityDto)
+        public IActionResult EditDoctor([FromBody] DoctorDto entityDto)
         {
             if (entityDto.Id <= 0)
             {
@@ -75,6 +75,31 @@ namespace SytemHospital.Api.Controllers
             doctorObj.Name = entityDto.Name;
             doctorObj.Specialty = entityDto.Specialty;
             doctorObj.Exequator = entityDto.Exequator;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return Ok(doctorObj);
+
+        }
+        [HttpPut("[action]/{id}")]
+        public IActionResult DeleteDoctor(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var doctorObj = _context.Doctors.Where(x => x.Id == id).FirstOrDefault();
+
+            doctorObj.IsDeleted = true;
 
             try
             {

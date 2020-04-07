@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SytemHospital.Model.GenericModel;
 
 namespace SytemHospital.Model.Entities
 {
-    public class Room
+    public class Room : BaseModel
     {
         public int Id { get; set; }
 
