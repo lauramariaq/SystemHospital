@@ -25,7 +25,7 @@ namespace SytemHospital.Api.Controllers
         [HttpGet("[action]")]
         public IActionResult GetAll()
         {
-            var rooms = _context.Rooms.ToList();
+            var rooms = _context.Rooms.Where(x => !x.IsDeleted).ToList();
 
             var list = rooms;
             if (rooms is null)
@@ -64,7 +64,7 @@ namespace SytemHospital.Api.Controllers
 
         }
         [HttpPut("[action]")]
-        public IActionResult EditDoctor([FromBody] RoomDto entityDto)
+        public IActionResult EditRoom([FromBody] RoomDto entityDto)
         {
             if (entityDto.Id <= 0)
             {
@@ -76,6 +76,32 @@ namespace SytemHospital.Api.Controllers
             roomObj.Number = entityDto.Number;
             roomObj.Type = entityDto.Type;
             roomObj.Price = entityDto.Price;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return Ok(roomObj);
+
+        }
+
+        [HttpPut("[action]/{id}")]
+        public IActionResult DeleteRoom(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var roomObj = _context.Rooms.Where(x => x.Id == id).FirstOrDefault();
+
+            roomObj.IsDeleted = true;
 
             try
             {

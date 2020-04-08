@@ -11,7 +11,8 @@ namespace SytemHospital.Bi.Dto
         public string Cedula { get; set; }
 
         public string Name { get; set; }
-
         public bool Insurance { get; set; }
+        public string InsuranceName { get; set; }
+
     }
 }

@@ -14,5 +14,6 @@ namespace SytemHospital.Model.Entities
         public string Name { get; set; }
 
         public bool Insurance { get; set; }
+        public string InsuranceName { get; set; }
     }
 }

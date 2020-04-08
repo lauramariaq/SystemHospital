@@ -25,7 +25,7 @@ namespace SytemHospital.Api.Controllers
         [HttpGet("[action]")]
         public IActionResult GetAll()
         {
-            var patient = _context.Patients.ToList();
+            var patient = _context.Patients.Where(x => !x.IsDeleted).ToList();
 
             if (patient is null)
                 return NotFound();
@@ -45,7 +45,12 @@ namespace SytemHospital.Api.Controllers
                 Name = entityDto.Name,
                 Cedula = entityDto.Cedula,
                 Insurance = entityDto.Insurance
+
             };
+            if (item.Insurance)
+            {
+                item.InsuranceName = entityDto.InsuranceName;
+            }
 
             _context.Patients.Add(item);
 
@@ -75,6 +80,31 @@ namespace SytemHospital.Api.Controllers
             patientObj.Name = entityDto.Name;
             patientObj.Cedula = entityDto.Cedula;
             patientObj.Insurance = entityDto.Insurance;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return Ok(patientObj);
+
+        }
+        [HttpPut("[action]/{id}")]
+        public IActionResult DeletePatient(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var patientObj = _context.Patients.Where(x => x.Id == id).FirstOrDefault();
+
+            patientObj.IsDeleted = true;
 
             try
             {
