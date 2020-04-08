@@ -108,5 +108,31 @@ namespace SytemHospital.Api.Controllers
             return Ok(dateObj);
 
         }
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetIncomeById(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var income = _context.Incomes
+                        .Where(x => x.Id == id)
+                        
+                        .FirstOrDefault();
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return Ok(income);
+
+        }
     }
 }

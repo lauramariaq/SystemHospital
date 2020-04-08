@@ -17,6 +17,8 @@ namespace SytemHospital.Model.SystemContex
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Date> Dates { get; set; }
         public DbSet<Income> Incomes { get; set; }
+        public DbSet<Alta> Altas { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
