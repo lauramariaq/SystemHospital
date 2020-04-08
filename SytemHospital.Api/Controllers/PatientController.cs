@@ -80,7 +80,10 @@ namespace SytemHospital.Api.Controllers
             patientObj.Name = entityDto.Name;
             patientObj.Cedula = entityDto.Cedula;
             patientObj.Insurance = entityDto.Insurance;
-
+            if (patientObj.Insurance)
+            {
+                patientObj.InsuranceName = entityDto.InsuranceName;
+            }
             try
             {
                 _context.SaveChanges();

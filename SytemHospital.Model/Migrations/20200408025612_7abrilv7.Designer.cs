@@ -9,8 +9,8 @@ using SytemHospital.Model.SystemContex;
 namespace SytemHospital.Model.Migrations
 {
     [DbContext(typeof(SystemContext))]
-    [Migration("20200407211322_7abrilv2")]
-    partial class _7abrilv2
+    [Migration("20200408025612_7abrilv7")]
+    partial class _7abrilv7
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,8 @@ namespace SytemHospital.Model.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Exequator");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Name");
 
@@ -47,6 +49,10 @@ namespace SytemHospital.Model.Migrations
 
                     b.Property<bool>("Insurance");
 
+                    b.Property<string>("InsuranceName");
+
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
@@ -60,11 +66,13 @@ namespace SytemHospital.Model.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("number");
+                    b.Property<bool>("IsDeleted");
 
-                    b.Property<int>("price");
+                    b.Property<int>("Number");
 
-                    b.Property<string>("type");
+                    b.Property<int>("Price");
+
+                    b.Property<string>("Type");
 
                     b.HasKey("Id");
 
