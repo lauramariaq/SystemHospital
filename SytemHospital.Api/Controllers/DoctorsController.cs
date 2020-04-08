@@ -33,6 +33,7 @@ namespace SytemHospital.Api.Controllers
             return Ok(doctors);
 
         }
+      
         [HttpPost("[action]")]
         public IActionResult SaveDoctor([FromBody] DoctorDto entityDto)
         {

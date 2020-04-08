@@ -10,8 +10,8 @@ using SytemHospital.Model.SystemContex;
 namespace SytemHospital.Model.Migrations
 {
     [DbContext(typeof(SystemContext))]
-    [Migration("20200408045145_7abrilv8")]
-    partial class _7abrilv8
+    [Migration("20200408134847_8abrilv")]
+    partial class _8abrilv
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,29 @@ namespace SytemHospital.Model.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("SytemHospital.Model.Entities.Alta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTimeOffset>("DateEnd");
+
+                    b.Property<int>("IncomeId");
+
+                    b.Property<string>("PatientName");
+
+                    b.Property<int>("TotalPrice");
+
+                    b.Property<string>("TypeRoom");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IncomeId");
+
+                    b.ToTable("Altas");
+                });
 
             modelBuilder.Entity("SytemHospital.Model.Entities.Date", b =>
                 {
@@ -67,6 +90,31 @@ namespace SytemHospital.Model.Migrations
                     b.ToTable("Doctors");
                 });
 
+            modelBuilder.Entity("SytemHospital.Model.Entities.Income", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTimeOffset>("IncomeDate");
+
+                    b.Property<int>("PatientId");
+
+                    b.Property<string>("PatientName");
+
+                    b.Property<int>("RoomId");
+
+                    b.Property<string>("TypeRoom");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Incomes");
+                });
+
             modelBuilder.Entity("SytemHospital.Model.Entities.Patient", b =>
                 {
                     b.Property<int>("Id")
@@ -107,6 +155,14 @@ namespace SytemHospital.Model.Migrations
                     b.ToTable("Rooms");
                 });
 
+            modelBuilder.Entity("SytemHospital.Model.Entities.Alta", b =>
+                {
+                    b.HasOne("SytemHospital.Model.Entities.Income", "Income")
+                        .WithMany()
+                        .HasForeignKey("IncomeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("SytemHospital.Model.Entities.Date", b =>
                 {
                     b.HasOne("SytemHospital.Model.Entities.Doctor", "Doctor")
@@ -117,6 +173,19 @@ namespace SytemHospital.Model.Migrations
                     b.HasOne("SytemHospital.Model.Entities.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SytemHospital.Model.Entities.Income", b =>
+                {
+                    b.HasOne("SytemHospital.Model.Entities.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SytemHospital.Model.Entities.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
