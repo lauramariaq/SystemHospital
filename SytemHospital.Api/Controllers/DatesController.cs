@@ -21,6 +21,18 @@ namespace SytemHospital.Api.Controllers
             _context = context;
         }
 
+
+
+        [HttpGet("[action]")]
+        public IActionResult GetAll()
+        {
+            var dates = _context.Dates.ToList();
+
+            if (dates is null)
+                return NotFound();
+
+            return Ok(dates);
+        }
         [HttpPost("[action]")]
         public IActionResult SaveDate([FromBody] DateDto entityDto)
         {
@@ -33,7 +45,7 @@ namespace SytemHospital.Api.Controllers
                         .Where(x => x.Id == entityDto.PatientId)
                         .FirstOrDefault();
 
-            var doctortObj = _context.Patients
+            var doctortObj = _context.Doctors
                 .Where(x => x.Id == entityDto.DoctorId)
                 .FirstOrDefault();
 
